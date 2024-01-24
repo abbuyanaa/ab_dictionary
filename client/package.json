@@ -1,0 +1,28 @@
+{
+  "name": "ab-dictionary-client",
+  "version": "0.1.0",
+  "description": "ab-dictionary-client",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "build": "cross-env ANALYZE=true NODE_ENV=production next build",
+    "start": "next start"
+  },
+  "author": "AB",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@next/bundle-analyzer": "^14.0.4",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "next": "14.0.4",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "nodemon": "^3.0.3"
+  }
+}
