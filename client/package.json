@@ -1,7 +1,7 @@
 {
-  "name": "ab-dictionary-client",
+  "name": "ab_dict_client",
   "version": "0.1.0",
-  "description": "ab-dictionary-client",
+  "description": "ab_dict_client",
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",

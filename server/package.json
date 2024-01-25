@@ -1,0 +1,28 @@
+{
+  "name": "ab_dict_server",
+  "version": "0.1.0",
+  "description": "ab dictionary",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server",
+    "start": "cross-env NODE_ENV=production pm2 start server.js -o \"/dev/null\" -e \"/dev/null\" --name ab_dict_server"
+  },
+  "author": "AB",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "connect-mysql2": "^2.2.6",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "express-locale": "^2.0.2",
+    "mysql2": "^3.8.0",
+    "os": "^0.1.2",
+    "pm2": "^5.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
