@@ -34,9 +34,7 @@ export default wrapper;
 
 // const sagaMiddleware = createSagaMiddleware();
 // const middlewares = [sagaMiddleware];
-// console.log(middlewares);
 // if (process.env.NODE_ENV !== 'production') middlewares.push(loggerMiddleware);
-// console.log(middlewares);
 // const store = configureStore({
 //   reducer: rootReducer,
 //   middleware: () => middlewares,

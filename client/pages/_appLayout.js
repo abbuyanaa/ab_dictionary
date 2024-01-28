@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import Layout from '../components/AppLayout';
+import Layout from '@/components/AppLayout';
 
 const AppLayout = ({ Component, pageProps }) => {
   const authRefs = useRef([]);
