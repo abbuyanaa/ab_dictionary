@@ -3,22 +3,18 @@ const express = require('express');
 const createLocaleMiddleware = require('express-locale');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-// const passport = require('passport');
-// const morgan = require('morgan');
-// const hpp = require('hpp');
-// const helmet = require('helmet');
 
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 console.log('--------------Server Starting---------------');
 console.log(`NODE_ENV : ${process.env.NODE_ENV || 'development'}`);
 
-const poolPromise = require('./db/pool');
+const pool = require('./db/pool');
 
 (async function() {
-  await poolPromise.getConnection().then(async (conn) => {
+  await pool.getConnection().then(async (conn) => {
     if (!conn) process.exit(1);
-    const [rows] = await poolPromise.query('SELECT NOW() AS SYSDATE');
+    const [rows] = await pool.query('SELECT NOW() AS SYSDATE');
     console.log(rows[0].SYSDATE);
     console.log('>> Database Config');
     console.log(` - connectString : ${conn.config.host}:${conn.config.port}`);
@@ -34,31 +30,22 @@ const poolPromise = require('./db/pool');
       default: 'en-US',
     }));
 
-    // if (process.env.NODE_ENV === 'production') {
-    //   app.use(morgan('combined'));
-    //   app.use(helmet());
-    //   app.use(hpp());
-    // } else {
-    //   app.use(morgan('dev'));
-    // }
-
     const corsOptions = {
       origin: `${process.env.SERVER_PROTOCOL}://${
         process.env.NODE_ENV === 'production'
           ? process.env.ORIGIN_HOST_PORT
           : process.env.DEV_ORIGIN_HOST_PORT
       }`,
-      // origin: true,
       credentials: true,
     };
 
     app.use(cors(corsOptions));
     app.use(cookieParser(process.env.COOKIE_SECRET));
     app.get('/', async (req, res) => {
-      const con = await poolPromise.getConnection();
+      const db = await pool.getConnection();
       try {
-        await con.beginTransaction();
-        const ins = await con.query(`
+        await db.beginTransaction();
+        const ins = await db.query(`
           INSERT INTO tb_words
           (wrdfst, wrdsnd, wrdlvl, wrdknd, reg_dt, upd_dt, wrkstn) VALUES
           ('a', 'b', '', '', now(), now(), 'a');
@@ -76,7 +63,11 @@ const poolPromise = require('./db/pool');
         console.error('SQL Error:', error);
         await con.rollback();
       } finally {
-        await con.release();
+        try {
+          await con.release();
+        } catch (error) {
+          console.error(error);
+        }
       }
     });
 

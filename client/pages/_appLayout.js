@@ -1,17 +1,13 @@
-import React from 'react';
-
-// import { axiosAPI } from '../api';
+import React, { useRef } from 'react';
 import Layout from '../components/AppLayout';
 
 const AppLayout = ({ Component, pageProps }) => {
-  // useEffect(() => {
-  //   axiosAPI.post('/log', { pathname: router.pathname });
-  // }, [router.pathname, user]);
+  const authRefs = useRef([]);
 
   return (
     <>
-      <Layout error={pageProps.error}>
-        {Component}
+      <Layout authRefs={authRefs} error={pageProps?.error}>
+        <Component authRefs={authRefs} {...pageProps} />
       </Layout>
     </>
   );
